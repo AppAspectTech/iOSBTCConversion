@@ -12,12 +12,13 @@ import SVProgressHUD
 
 class BTCRateViewController: UIViewController {
 
-
+    // MARK: - Members
     @IBOutlet weak var rateTableView: UITableView!
     
     var selectedCurrencyArray:NSArray!
     var tickerDataArray:NSMutableArray! = NSMutableArray()
   
+    // MARK: - View-Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,16 +32,27 @@ class BTCRateViewController: UIViewController {
         SVProgressHUD.setBackgroundColor(themeColor)
         SVProgressHUD.setForegroundColor(UIColor.white)
         
-        self.getCurrencyTickerData()
+        self.getCurrencyTickerData(showHUD: true)
        
         // Do any additional setup after loading the view.
     }
-    func getCurrencyTickerData(){
+    override func viewWillDisappear(_ animated: Bool) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(getCurrencyTickerData(showHUD:)), object: nil)
+    }
+    // MARK: - IBAction
+    @IBAction func backButtonAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK: - Selector
+    @objc func getCurrencyTickerData(showHUD:Bool){
       
-        SVProgressHUD.show()
-      
-        for index in 0..<self.selectedCurrencyArray.count {
-           let name = self.selectedCurrencyArray[index] as! String
+        if showHUD {
+            SVProgressHUD.show()
+        }
+        self.tickerDataArray.removeAllObjects()
+        for name in  self.selectedCurrencyArray{
+           //let name = self.selectedCurrencyArray[index] as! String
         
             let URL = "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTC\(name)"
             Alamofire.request(URL,
@@ -59,28 +71,17 @@ class BTCRateViewController: UIViewController {
                     if self.tickerDataArray.count == self.selectedCurrencyArray.count
                     {
                         DispatchQueue.main.async(execute: {
-                            
                             SVProgressHUD.dismiss()
                             self.rateTableView.reloadData()
+                            self.perform(#selector(self.getCurrencyTickerData(showHUD:)), with: nil, afterDelay: 20)
+                            
                         })
                     }
             }
         }
-//        for name in self.selectedCurrencyArray{
-//
-//        }
-//
-//        DispatchQueue.global(qos: .default).async(execute: {
-//
-//
-//
-//            DispatchQueue.main.async(execute: {
-//                SVProgressHUD.dismiss()
-//                self.rateTableView.reloadData()
-//            })
-//        })
     }
 }
+// MARK: - UITableView
 extension BTCRateViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.tickerDataArray.count

@@ -42,17 +42,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eav-Tk-mvK">
-                                <rect key="frame" x="8" y="21" width="8" height="15"/>
+                                <rect key="frame" x="8" y="21" width="9" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="KUd-et-POw"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="8" id="w0Q-yD-bHY"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.1960784314" green="0.21176470589999999" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="123456" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RkY-KT-bGH">
-                                <rect key="frame" x="24" y="14" width="180" height="24"/>
+                                <rect key="frame" x="25" y="14" width="179" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="UPV-ht-qj2"/>
                                 </constraints>

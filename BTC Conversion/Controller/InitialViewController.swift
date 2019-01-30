@@ -11,22 +11,21 @@ import IQKeyboardManagerSwift
 
 class InitialViewController: UIViewController {
 
-    
+    // MARK: - Members
     @IBOutlet weak var userNameTxt: UITextField!
     
+    // MARK: - View-Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         IQKeyboardManager.shared.enable = true
-
-        // Do any additional setup after loading the view.
     }
     
-
+    // MARK: - IBAction
     @IBAction func startButtonAction(_ sender: Any) {
         
         if userNameTxt.text?.count == 0{
-            objAppManager.showAlertWith(title: "Name Required", msg: "Please enter name to continue", viewController: self)
+            objAppManager.showAlertWith(title: NSLocalizedString("Name Required", comment: ""), message: NSLocalizedString("Please enter name to continue", comment: ""), InViewController: self)
         }else{
             UserDefaults.standard.set(self.userNameTxt.text, forKey: "User_Name")
             UserDefaults.standard.synchronize()
@@ -34,14 +33,4 @@ class InitialViewController: UIViewController {
             self.navigationController?.popToRootViewController(animated: false)
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -10,6 +10,8 @@ import UIKit
 
 class CurrencySelectionViewController: UIViewController {
 
+    // MARK: - Members
+    
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -19,6 +21,8 @@ class CurrencySelectionViewController: UIViewController {
     public var screenWidth: CGFloat {
         return UIScreen.main.bounds.width
     }
+    
+    // MARK: - View-Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,17 +32,16 @@ class CurrencySelectionViewController: UIViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
-        // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
         selectedCurrencyArray.removeAllObjects()
         self.collectionView.reloadData()
     }
-
+    // MARK: - IBAction
     @IBAction func nextButtonAction(_ sender: Any) {
         
         if self.selectedCurrencyArray.count == 0{
-            objAppManager.showAlertWith(title: "Select Currency", msg: "Please selecte minimum 1 currency", viewController: self)
+            objAppManager.showAlertWith(title: NSLocalizedString("Select Currency", comment: ""), message: NSLocalizedString("Please selecte minimum 1 currency", comment: ""), InViewController: self)
         }else{
             if objBTCRateVC == nil{
                 objBTCRateVC = storyboard!.instantiateViewController(withIdentifier: "BTCRateViewController") as? BTCRateViewController
@@ -48,9 +51,9 @@ class CurrencySelectionViewController: UIViewController {
         }
         
     }
-    
-
 }
+
+// MARK: - UICollectionView
 extension CurrencySelectionViewController:UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return currencyArray.count

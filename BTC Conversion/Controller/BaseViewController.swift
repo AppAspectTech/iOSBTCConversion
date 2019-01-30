@@ -9,39 +9,40 @@
 import UIKit
 
 class BaseViewController: UIViewController {
-
+    
+    // MARK: - Members
     var objInitialVC:InitialViewController?
     var objCurrencySelectionVC:CurrencySelectionViewController?
     
+    // MARK: - View-Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.navigationController?.isNavigationBarHidden = true
         
         // Checking User Open app first time
-        
-        //let userName:String = (UserDefaults.standard.value(forKey: "User_Name") as! String)
-        
+        // check here blank "User_Name"
         if (UserDefaults.standard.value(forKey: "User_Name") == nil) {
             objAppManager.navigateToViewController = NavigateTo.InitialVC
         }else{
             objAppManager.navigateToViewController = NavigateTo.CurrencySelectionVC
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(changeViewControllerViaNotificationCenter), name: NSNotification.Name(rawValue: "changeViewController"), object: nil)
         
-        // Do any additional setup after loading the view.
+        // Change ViewController when app gone in the background
+        NotificationCenter.default.addObserver(self, selector: #selector(changeViewControllerViaNotificationCenter), name: NSNotification.Name(rawValue: "changeViewController"), object: nil)
     }
-    // MARK: - ViewWillAppear
     override func viewWillAppear(_ animated: Bool) {
-        self.changeViewController()
+        self.manageViewControllerStack()
     }
+    
+    // MARK: - Selectors
     @objc func changeViewControllerViaNotificationCenter() {
         if (UserDefaults.standard.value(forKey: "User_Name") != nil) {
             self.navigationController?.popToRootViewController(animated: false)
         }
     }
     // MARK: - Change ViewController - Manager ViewController Navigation
-    func changeViewController() {
+    func manageViewControllerStack() {
         
         switch objAppManager.navigateToViewController{
         case .InitialVC:
@@ -57,23 +58,7 @@ class BaseViewController: UIViewController {
             }
             navigationController?.pushViewController(objCurrencySelectionVC!, animated: false)
             break
-//        default:
-//            if objInitialVC == nil{
-//                objInitialVC = storyboard!.instantiateViewController(withIdentifier: "InitialViewController") as? InitialViewController
-//            }
-//            navigationController?.pushViewController(objInitialVC!, animated: false)
-//            break
+            
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
